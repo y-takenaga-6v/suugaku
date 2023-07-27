@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>因数分解レベル２</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body bgcolor="#ffcccb">
+        <div id="app">
+            <h1>因数分解　レベル２</h1>
+            
+            <h2>正解数:{{seikai}}　不正解数:{{fuseikai}}</h2>
+            <h2 v-if="run_flg">残り {{sec}} 秒</h2>
+
+            <font size="7">{{ mondai }}</font><br/>
+            <button v-on:click="start" v-if="!run_flg">start</button>
+
+           <table v-if="run_flg && !hantei_flg" border="0">
+            <tr><td><h1 v-if="run_flg" style="text-align:right">=(x{{num1_plus}}{{num1}})</h1></td>
+            <td><h1 v-if="run_flg" style="text-align:left">(x{{num2_plus}}{{num2}})</h1></td></tr>
+            <tr>
+                <td>
+            <button v-on:click="num1_1" v-if="run_flg && !hantei_flg">1</button>
+            <button v-on:click="num1_2" v-if="run_flg && !hantei_flg">2</button>
+            <button v-on:click="num1_3" v-if="run_flg && !hantei_flg">3</button><br>
+            <button v-on:click="num1_4" v-if="run_flg && !hantei_flg">4</button>
+            <button v-on:click="num1_5" v-if="run_flg && !hantei_flg">5</button>
+            <button v-on:click="num1_6" v-if="run_flg && !hantei_flg">6</button><br>
+            <button v-on:click="num1_7" v-if="run_flg && !hantei_flg">7</button>
+            <button v-on:click="num1_8" v-if="run_flg && !hantei_flg">8</button>
+            <button v-on:click="num1_9" v-if="run_flg && !hantei_flg">9</button><br>
+            <button v-on:click="num1_0" v-if="run_flg && !hantei_flg">0</button>
+            <button v-on:click="num1_pm" v-if="run_flg && !hantei_flg">±</button>
+        </td>   
+            <td>
+            <button v-on:click="num2_1" v-if="run_flg && !hantei_flg">1</button>
+            <button v-on:click="num2_2" v-if="run_flg && !hantei_flg">2</button>
+            <button v-on:click="num2_3" v-if="run_flg && !hantei_flg">3</button><br>
+            <button v-on:click="num2_4" v-if="run_flg && !hantei_flg">4</button>
+            <button v-on:click="num2_5" v-if="run_flg && !hantei_flg">5</button>
+            <button v-on:click="num2_6" v-if="run_flg && !hantei_flg">6</button><br>
+            <button v-on:click="num2_7" v-if="run_flg && !hantei_flg">7</button>
+            <button v-on:click="num2_8" v-if="run_flg && !hantei_flg">8</button>
+            <button v-on:click="num2_9" v-if="run_flg && !hantei_flg">9</button><br>
+            <button v-on:click="num2_0" v-if="run_flg && !hantei_flg">0</button>
+            <button v-on:click="num2_pm" v-if="run_flg && !hantei_flg">±</button>
+            <br/></td>
+            </tr>
+            </table>
+
+            <button v-on:click="kaitou"
+           v-if="!hantei_flg && run_flg">答える</button>
+
+           <h1 v-if="hantei_flg" v-bind:style="{background:bg_color}">{{hantei}}</h1>
+         
+           <button v-on:click="tsugi" v-if="run_flg && hantei_flg">次の問題</button>
+
+
+        </div>    
+    
+        <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.js"></script>
+        <script src="js/level2.js"></script>
+    </body>
+</html>
