@@ -1,6 +1,3 @@
-const audio_fuseikai = new Audio('../sound/a-nasty-sound-if-you-choose-the-wrong-one-149895.mp3');
-const audio_seikai = new Audio('../sound/unpause-106278.mp3');
-
 Vue.createApp({
     data() {
         return {
@@ -18,11 +15,6 @@ Vue.createApp({
             mondai: '',
             a: 0,
             b: 0,
-            c: 0,
-            d: 0,
-            ac: 0,
-            ad_bc: 0,
-            bd: 0,
             seikai: '',
             fuseikai: '',
             bg_color: '',
@@ -85,21 +77,11 @@ Vue.createApp({
                 this.num1 = this.num2 = this.num3 = this.num4 = 0;
                 this.show_num1 = this.show_num3 = '?';
                 this.num2_plus = this.num4_plus = '+';
-                this.a = Math.floor(Math.random() * 4 + 2); //2から5
+                this.a = Math.floor(Math.random() * 5 + 1); //1から5
                 do {
                     this.b = Math.floor(Math.random() * 5 + 1);
                 } while (this.gcm(this.a, this.b) != 1); //　互いに素になるように
                 if (Math.random() > .5) { this.b *= -1 };
-
-                this.c = Math.floor(Math.random() * 5 + 1);
-                do {
-                    this.d = Math.floor(Math.random() * 5 + 1);
-                } while (this.gcm(this.c, this.d) != 1); //　互いに素になるように   
-                if (Math.random() > .5) { this.d *= -1 };
-
-                this.ac = this.a * this.c;
-                this.ad_bc = this.a * this.d + this.b * this.c;
-                this.bd = this.b * this.d;
 
                 if (this.ad_bc >= 0) {
                     ad_plus_bc = '+' + this.ad_bc + 'x';
@@ -121,7 +103,7 @@ Vue.createApp({
                 } else {
                     _bd = this.bd;
                 }
-                this.mondai = this.ac + 'x²' + ad_plus_bc + _bd;
+                this.mondai = '(' + this.a + 'x ' + '+' + this.b + 'y )³' ;
 
 
             }
@@ -132,16 +114,27 @@ Vue.createApp({
             this.mondai = '終了！！';
         },
 
-
-        num1_1: function () { this.num1 = 1; this.show_num1 = ''; },
-        num1_2: function () { this.num1 = this.show_num1 = 2; },
-        num1_3: function () { this.num1 = this.show_num1 = 3; },
-        num1_4: function () { this.num1 = this.show_num1 = 4; },
-        num1_5: function () { this.num1 = this.show_num1 = 5; },
-        num1_6: function () { this.num1 = this.show_num1 = 6; },
-        num1_7: function () { this.num1 = this.show_num1 = 7; },
-        num1_8: function () { this.num1 = this.show_num1 = 8; },
-        num1_9: function () { this.num1 = this.show_num1 = 9; },
+        first(n) {
+            if (this.num1 >= 0) {
+                this.num1 = this.num1 * 10 + n;
+            } else {
+                this.num1 = this.num1 * 10 - n;
+            }
+        },
+        num1_1: function () { this.first(1); },
+        num1_2: function () { this.first(2); },
+        num1_3: function () { this.first(3); },
+        num1_4: function () { this.first(4); },
+        num1_5: function () { this.first(5); },
+        num1_6: function () { this.first(6); },
+        num1_7: function () { this.first(7); },
+        num1_8: function () { this.first(8); },
+        num1_9: function () { this.first(9); },
+        num1_pm: function () { 
+            this.num1 *= -1; 
+            if(this.num1>=0){this.num1_plus='+';}else{this.num1_plus='';}
+        },
+        num1_C: function () { this.num1 = 0; this.num1_plus='+';},  
 
         num2_1: function () { this.num2 = this.num2 >= 0 ? 1 : -1; },
         num2_2: function () { this.num2 = this.num2 >= 0 ? 2 : -2; },
@@ -190,12 +183,10 @@ Vue.createApp({
             this.hantei_flg = true;
             if (this.a == this.num1 && this.b == this.num2 && this.c == this.num3 && this.d == this.num4
                 || this.a == this.num3 && this.b == this.num4 && this.c == this.num1 && this.d == this.num2) {
-                audio_seikai.play();
                 this.bg_color = '#9f9';
                 this.hantei = "正解";
                 this.seikai++;
             } else {
-                audio_fuseikai.play();
                 this.bg_color = '#f99';
 
 

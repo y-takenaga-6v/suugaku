@@ -1,12 +1,23 @@
-const audio_fuseikai = new Audio('../sound/a-nasty-sound-if-you-choose-the-wrong-one-149895.mp3');
-const audio_seikai = new Audio('../sound/unpause-106278.mp3');
+const audio_fuseikai = new Audio('../sound/blip01.mp3');
+const audio_seikai = new Audio('../sound/correct_answer2.mp3');
+const audio_stage_clear = new Audio('../sound/correct_answer3.mp3');
+const audio_all_clear = new Audio('../sound/scene_change4.mp3');
+const audio_all_clear2 = new Audio('../sound/short_clap1.mp3');
 
 Vue.createApp({
     data(){
         return {
+            mondai_db: [
+                [[1,4],[3,4],[2,2],[3,2],[6,6]],
+                [[-2,-6],[-3,-3],[5,6],[-7,-7],[4,-4]],
+                [[-3,6],[5,-6],[4,-9],[3,-5],[9,-8]],
+            ],
+            stage: 1,
+            mondai_num: 1,
+            stage_clear: false,
+            all_clear: false,
+            first_time: true,
             sec: 0,
-            set_sec: 60,
-            limit_sec: 60,
             num1: 0,
             num2: 0,
             num1_plus: '',
@@ -14,8 +25,6 @@ Vue.createApp({
             mondai: '',
             a: 0,
             b: 0,
-            seikai: '',
-            fuseikai: '',
             bg_color: '',
             hantei: '',
             run_flg: false,
@@ -26,32 +35,21 @@ Vue.createApp({
     },
 
     methods: {
-        time_set(s) {
-            this.set_sec=s;
-        },
-        time_inc10(){
-            this.set_sec+=10;
-        },
-        time_dec10(){
-            this.set_sec-=10;
-            if(this.set_sec<10){this.set_sec=10;}
-        },
-
         count() {
-            if (this.sec == 0 ) {
-            this.stop();
-            } else {
-            this.sec--;
-            }
+            this.sec++;
         },
         start() {
             
             let self = this;
-            this.sec = this.limit_sec = this.set_sec;
+            this.stage = 1;
+            this.mondai_num = 1;
+            this.sec = 0;
             this.seikai=0;
             this.fuseikai=0;
             this.timer_flg = true;
             this.run_flg = true;
+            this.first_time = false;
+            this.all_clear = false;
 
             this.timerObj = setInterval(function() {self.count()}, 1000)
             
@@ -66,15 +64,26 @@ Vue.createApp({
             this.owari();
         },
 
+        tsugi_1() {
+            this.mondai_num++;
+            if(this.mondai_num == 6){
+                this.stage_clear = false;
+                this.mondai_num =1;
+                this.stage++;
+            }
+     
+            this.tsugi();
+        },
+
         tsugi() {
             if(this.run_flg && this.timer_flg){
                 this.hantei_flg=false;
                 this.num1=this.num2=0;
                 this.num1_plus=this.num2_plus='+';
-                this.a=Math.floor(Math.random()*9+1) ;
-                if(Math.random()>.5) {this.a *= -1};
-                this.b=Math.floor(Math.random()*9+1) ;
-                if(Math.random()>.5) {this.b *= -1};
+
+                this.a=this.mondai_db[this.stage - 1][this.mondai_num - 1][0];
+                this.b=this.mondai_db[this.stage - 1][this.mondai_num - 1][1];
+            
                 wa=this.a+this.b;
                 seki=this.a*this.b;
                 if(wa >= 0){
@@ -140,16 +149,33 @@ Vue.createApp({
             this.hantei_flg = true;
             if( (this.a == this.num1 && this.b == this.num2) ||
                 (this.a == this.num2 && this.b == this.num1) ){
-                    audio_seikai.play();
                     this.bg_color='#9f9';
                     this.hantei = "正解";
-                    this.seikai++;
+
+                if(this.mondai_num==5){
+                    if(this.stage==3){
+                        this.all_clear = true;
+                        audio_all_clear.play();
+                        audio_all_clear2.play();
+                        clearInterval(this.timerObj);
+                        this.timer_flg = false; 
+                        this.run_flg = false;
+                    }else{
+                        this.stage_clear = true;
+                        audio_stage_clear.play();
+                    }
+                }else{
+                    audio_seikai.play();
+                }
+   
             } else {
                 audio_fuseikai.play();
                 this.bg_color='#f99';
                 this.hantei = '不正解　正解は　'
                      + this.a +' と '+ this.b ;
-                this.fuseikai++;
+                clearInterval(this.timerObj);
+                this.timer_flg = false; 
+                this.run_flg = false;
             }
         }
         

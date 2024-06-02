@@ -1,3 +1,6 @@
+const audio_fuseikai = new Audio('../sound/a-nasty-sound-if-you-choose-the-wrong-one-149895.mp3');
+const audio_seikai = new Audio('../sound/unpause-106278.mp3');
+
 Vue.createApp({
     data() {
         return {
@@ -185,10 +188,12 @@ Vue.createApp({
             this.hantei_flg = true;
             if (this.a == this.num1 && this.b == this.num2 && this.c == this.num3 && this.d == this.num4
                 || this.a == this.num3 && this.b == this.num4 && this.c == this.num1 && this.d == this.num2) {
+                audio_seikai.play();
                 this.bg_color = '#9f9';
                 this.hantei = "正解";
                 this.seikai++;
             } else {
+                audio_fuseikai.play();
                 this.bg_color = '#f99';
 
 
