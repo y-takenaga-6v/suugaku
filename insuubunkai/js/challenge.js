@@ -44,8 +44,6 @@ Vue.createApp({
             this.stage = 1;
             this.mondai_num = 1;
             this.sec = 0;
-            this.seikai=0;
-            this.fuseikai=0;
             this.timer_flg = true;
             this.run_flg = true;
             this.first_time = false;

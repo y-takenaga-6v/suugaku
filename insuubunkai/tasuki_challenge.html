@@ -3,22 +3,20 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>因数分解チャレンジ</title>
+    <title>たすきがけ（チャレンジ）</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body style="background-color:#ffffff">
+<body>
     <div class="container" style="margin-top: 5px;">
         <div id="app">
             <div class="row">
                 <div class="col-4">
-                    <div class="text-center">
-                        <h1>因数分解</h1>
-                        <h2>チャレンジ</h2>
-                        <h2>ステージ {{stage}}</h2>
-                        <h2>第 {{mondai_num}} 問</h2>
-                        <h2>{{sec}} 秒</h2>
-                    </div>
+                    <h1>因数分解</h1>
+                    <h2>たすきがけ(チャレンジ)</h2>
+                    <h2>ステージ {{stage}}</h2>
+                    <h2>第 {{mondai_num}} 問</h2>
+                    <h2>{{sec}} 秒</h2>
                 </div>
                 <div class="col-8">
                     <div v-if="first_time">
@@ -37,19 +35,24 @@
 
                     <table>
                         <tr>
-                            <td colspan="2">
-                                <h1>{{ mondai }}</h1>
+                            <td colspan="3">
+                                <h1 style="font-size:60px">{{ mondai }}</h1>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <h1 v-if="run_flg || all_clear" style="text-align:right">=(x{{num1_plus}}{{num1}})</h1>
+                                <h1 v-if="run_flg" style="text-align:right">=({{show_num1}}x</h1>
                             </td>
                             <td>
-                                <h1 v-if="run_flg || all_clear" style="text-align:left">(x{{num2_plus}}{{num2}})</h1>
+                                <h1 v-if="run_flg" style="text-align:center">{{num2_plus}}{{num2}})</h1>
+                            </td>
+                            <td>
+                                <h1 v-if="run_flg" style="text-align:center">({{show_num3}}x</h1>
+                            </td>
+                            <td>
+                                <h1 v-if="run_flg" style="text-align:left">{{num4_plus}}{{num4}})</h1>
                             </td>
                         </tr>
-
                         <tr v-if="run_flg && !hantei_flg" border="0">
                             <td>
                                 <button class="btn btn-lg btn-outline-primary" v-on:click="num1_1"
@@ -70,10 +73,6 @@
                                     v-if="run_flg && !hantei_flg">8</button>
                                 <button class="btn btn-lg btn-outline-primary" v-on:click="num1_9"
                                     v-if="run_flg && !hantei_flg">9</button><br>
-                                <button class="btn btn-lg btn-outline-primary" v-on:click="num1_0"
-                                    v-if="run_flg && !hantei_flg">0</button>
-                                <button class="btn btn-lg btn-outline-primary" v-on:click="num1_pm"
-                                    v-if="run_flg && !hantei_flg">±</button>
                             </td>
                             <td>
                                 <button class="btn btn-lg btn-outline-success" v-on:click="num2_1"
@@ -94,20 +93,62 @@
                                     v-if="run_flg && !hantei_flg">8</button>
                                 <button class="btn btn-lg btn-outline-success" v-on:click="num2_9"
                                     v-if="run_flg && !hantei_flg">9</button><br>
-                                <button class="btn btn-lg btn-outline-success" v-on:click="num2_0"
-                                    v-if="run_flg && !hantei_flg">0</button>
                                 <button class="btn btn-lg btn-outline-success" v-on:click="num2_pm"
+                                    v-if="run_flg && !hantei_flg">±</button>
+                                <br />
+                            </td>
+                            <td>
+                                <button class="btn btn-lg btn-outline-primary" v-on:click="num3_1"
+                                    v-if="run_flg && !hantei_flg">1</button>
+                                <button class="btn btn-lg btn-outline-primary" v-on:click="num3_2"
+                                    v-if="run_flg && !hantei_flg">2</button>
+                                <button class="btn btn-lg btn-outline-primary" v-on:click="num3_3"
+                                    v-if="run_flg && !hantei_flg">3</button><br>
+                                <button class="btn btn-lg btn-outline-primary" v-on:click="num3_4"
+                                    v-if="run_flg && !hantei_flg">4</button>
+                                <button class="btn btn-lg btn-outline-primary" v-on:click="num3_5"
+                                    v-if="run_flg && !hantei_flg">5</button>
+                                <button class="btn btn-lg btn-outline-primary" v-on:click="num3_6"
+                                    v-if="run_flg && !hantei_flg">6</button><br>
+                                <button class="btn btn-lg btn-outline-primary" v-on:click="num3_7"
+                                    v-if="run_flg && !hantei_flg">7</button>
+                                <button class="btn btn-lg btn-outline-primary" v-on:click="num3_8"
+                                    v-if="run_flg && !hantei_flg">8</button>
+                                <button class="btn btn-lg btn-outline-primary" v-on:click="num3_9"
+                                    v-if="run_flg && !hantei_flg">9</button><br>
+                                <br />
+                            </td>
+                            <td>
+                                <button class="btn btn-lg btn-outline-success" v-on:click="num4_1"
+                                    v-if="run_flg && !hantei_flg">1</button>
+                                <button class="btn btn-lg btn-outline-success" v-on:click="num4_2"
+                                    v-if="run_flg && !hantei_flg">2</button>
+                                <button class="btn btn-lg btn-outline-success" v-on:click="num4_3"
+                                    v-if="run_flg && !hantei_flg">3</button><br>
+                                <button class="btn btn-lg btn-outline-success" v-on:click="num4_4"
+                                    v-if="run_flg && !hantei_flg">4</button>
+                                <button class="btn btn-lg btn-outline-success" v-on:click="num4_5"
+                                    v-if="run_flg && !hantei_flg">5</button>
+                                <button class="btn btn-lg btn-outline-success" v-on:click="num4_6"
+                                    v-if="run_flg && !hantei_flg">6</button><br>
+                                <button class="btn btn-lg btn-outline-success" v-on:click="num4_7"
+                                    v-if="run_flg && !hantei_flg">7</button>
+                                <button class="btn btn-lg btn-outline-success" v-on:click="num4_8"
+                                    v-if="run_flg && !hantei_flg">8</button>
+                                <button class="btn btn-lg btn-outline-success" v-on:click="num4_9"
+                                    v-if="run_flg && !hantei_flg">9</button><br>
+                                <button class="btn btn-lg btn-outline-success" v-on:click="num4_pm"
                                     v-if="run_flg && !hantei_flg">±</button>
                                 <br />
                             </td>
                         </tr>
                     </table>
-                    <br>
+
                     <button class="btn btn-lg btn-primary" v-on:click="kaitou"
                         v-if="!hantei_flg && run_flg">答える</button>
 
                     <h1 v-if="hantei_flg" v-bind:style="{background:bg_color}">{{hantei}}</h1>
-
+                    
                     <div v-if="stage_clear">
                         <h1>ステージ{{stage}}クリアです。</h1>
                         <h1>どんどんいきましょう！！</h1>
@@ -116,8 +157,8 @@
                         <h1>おめでとうございます。</h1>
                         <h1>すべてクリアです。</h1>
                     </div>
-                    <button class="btn btn-lg btn-primary" v-on:click="tsugi_1"
-                        v-if="run_flg && hantei_flg">次の問題</button>
+                    
+                    <button class="btn btn-lg btn-primary" v-on:click="tsugi_1" v-if="run_flg && hantei_flg">次の問題</button>
 
                     <div v-if="!run_flg">
 
@@ -136,8 +177,8 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.js"></script>
-    <script src="js/challenge.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.min.js"></script>
+    <script src="js/tasuki_challenge.js"></script>
 </body>
 
 </html>
