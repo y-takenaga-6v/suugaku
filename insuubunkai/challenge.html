@@ -18,6 +18,9 @@
                         <h2>ステージ {{stage}}</h2>
                         <h2>第 {{mondai_num}} 問</h2>
                         <h2>{{sec}} 秒</h2>
+                        <br />
+                        <h2>これまでの記録</h2>
+                        <h2 v-if="min_sec!=99999">{{min_sec}} 秒</h2>
                     </div>
                 </div>
                 <div class="col-8">

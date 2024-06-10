@@ -18,6 +18,7 @@ Vue.createApp({
             all_clear: false,
             first_time: true,
             sec: 0,
+            min_sec: 99999,
             num1: 0,
             num2: 0,
             num3: 0,
@@ -203,6 +204,9 @@ Vue.createApp({
                         clearInterval(this.timerObj);
                         this.timer_flg = false;
                         this.run_flg = false;
+                        if(this.sec<this.min_sec){
+                            this.min_sec=this.sec;
+                        }
                     } else {
                         this.stage_clear = true;
                         audio_stage_clear.play();

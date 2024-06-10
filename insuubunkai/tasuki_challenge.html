@@ -12,11 +12,16 @@
         <div id="app">
             <div class="row">
                 <div class="col-4">
-                    <h1>因数分解</h1>
-                    <h2>たすきがけ(チャレンジ)</h2>
-                    <h2>ステージ {{stage}}</h2>
-                    <h2>第 {{mondai_num}} 問</h2>
-                    <h2>{{sec}} 秒</h2>
+                    <div class="text-center">
+                        <h1>因数分解</h1>
+                        <h2>たすきがけ(チャレンジ)</h2>
+                        <h2>ステージ {{stage}}</h2>
+                        <h2>第 {{mondai_num}} 問</h2>
+                        <h2>{{sec}} 秒</h2>
+                        <br />
+                        <h2>これまでの記録</h2>
+                        <h2 v-if="min_sec!=99999">{{min_sec}} 秒</h2>
+                    </div>
                 </div>
                 <div class="col-8">
                     <div v-if="first_time">
@@ -148,7 +153,7 @@
                         v-if="!hantei_flg && run_flg">答える</button>
 
                     <h1 v-if="hantei_flg" v-bind:style="{background:bg_color}">{{hantei}}</h1>
-                    
+
                     <div v-if="stage_clear">
                         <h1>ステージ{{stage}}クリアです。</h1>
                         <h1>どんどんいきましょう！！</h1>
@@ -157,8 +162,9 @@
                         <h1>おめでとうございます。</h1>
                         <h1>すべてクリアです。</h1>
                     </div>
-                    
-                    <button class="btn btn-lg btn-primary" v-on:click="tsugi_1" v-if="run_flg && hantei_flg">次の問題</button>
+
+                    <button class="btn btn-lg btn-primary" v-on:click="tsugi_1"
+                        v-if="run_flg && hantei_flg">次の問題</button>
 
                     <div v-if="!run_flg">
 

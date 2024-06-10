@@ -43,16 +43,19 @@
                         </tr>
                         <tr>
                             <td>
-                                <h1 v-if="run_flg" style="text-align:right">={{show_num1}}x³</h1>
+                                <h1 v-if="run_flg && num1 == 1" style="text-align:right">=x³</h1>
+                                <h1 v-if="run_flg && num1 != 1" style="text-align:right">={{num1}}x³</h1>
                             </td>
                             <td>
-                                <h1 v-if="run_flg" style="text-align:center">{{num2_plus}}{{num2}}xy</h1>
+                                <h1 v-if="run_flg" style="text-align:center">{{num2_plus}}{{num2}}x²y</h1>
                             </td>
                             <td>
-                                <h1 v-if="run_flg" style="text-align:center">{{show_num3}}xy</h1>
+                                <h1 v-if="run_flg" style="text-align:center">{{num3_plus}}{{num3}}xy²</h1>
                             </td>
                             <td>
-                                <h1 v-if="run_flg" style="text-align:left">{{num4_plus}}{{num4}}y³</h1>
+                                <h1 v-if="run_flg && num4 == 1" style="text-align:left">{{num4_plus}}y³</h1>
+                                <h1 v-if="run_flg && num4 == -1" style="text-align:left">{{num4_plus}}-y³</h1>
+                                <h1 v-if="run_flg && num4 != 1 && num4 != -1" style="text-align:left">{{num4_plus}}{{num4}}y³</h1>
                             </td>
                         </tr>
                         <tr v-if="run_flg && !hantei_flg" border="0">
