@@ -15,6 +15,8 @@ Vue.createApp({
             mondai: '',
             a: 0,
             b: 0,
+            old_a: 0,
+            old_b: 0,
             bb: [2, 3, 5, 6, 7],
             seikai: '',
             fuseikai: '',
@@ -61,6 +63,7 @@ Vue.createApp({
             this.fuseikai = 0;
             this.timer_flg = true;
             this.run_flg = true;
+            this.old_a = this.old_b = 0;
 
             this.timerObj = setInterval(function () { self.count() }, 1000)
 
@@ -80,20 +83,24 @@ Vue.createApp({
                 this.hantei_flg = false;
                 this.num1 = this.num2 = '?';
 
-                switch (this.level_sel[this.level]) {
-                    case '初級':
-                        this.a = Math.floor(Math.random() * 2 + 2); //2から3
-                        this.b = this.bb[Math.floor(Math.random() * 2)];
-                        break;
-                    case '中級':
-                        this.a = Math.floor(Math.random() * 3 + 2); //2から4
-                        this.b = this.bb[Math.floor(Math.random() * 4)];
-                        break;
-                    case '上級':
-                        this.a = Math.floor(Math.random() * 4 + 3); //3から6
-                        this.b = this.bb[Math.floor(Math.random() * 5)];
-                        break;
-                }
+                do {
+                    switch (this.level_sel[this.level]) {
+                        case '初級':
+                            this.a = Math.floor(Math.random() * 2 + 2); //2から3
+                            this.b = this.bb[Math.floor(Math.random() * 2)];
+                            break;
+                        case '中級':
+                            this.a = Math.floor(Math.random() * 3 + 2); //2から4
+                            this.b = this.bb[Math.floor(Math.random() * 4)];
+                            break;
+                        case '上級':
+                            this.a = Math.floor(Math.random() * 4 + 3); //3から6
+                            this.b = this.bb[Math.floor(Math.random() * 5)];
+                            break;
+                    }
+                } while (this.a == this.old_a && this.b == this.old_b)
+                this.old_a = this.a;
+                this.old_b = this.b;
 
                 this.mondai = this.a * this.a * this.b;
             }
