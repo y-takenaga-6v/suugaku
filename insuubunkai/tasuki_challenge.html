@@ -43,6 +43,22 @@
                             <td colspan="3">
                                 <h1 style="font-size:60px">{{ mondai }}</h1>
                             </td>
+                            <td style="text-align: right" v-if="run_flg">
+                                <table>
+                                    <tr class="bg-warning">
+                                        <td>
+                                            <h2>{{num1}}</h2>
+                                        </td>
+                                        <td rowspan="2"><h1>☓</h1></td>
+                                        <td><h2>{{num2}}</h2></td>
+                                    </tr>
+
+                                    <tr class="bg-warning">
+                                        <td><h2>{{num3}}</h2></td>
+                                        <td><h2>{{num4}}</h2></td>
+                                    </tr>
+                                </table>
+                            </td>
                         </tr>
                         <tr>
                             <td>
